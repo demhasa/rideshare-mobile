@@ -5,6 +5,10 @@
 Projekt mësimor Next.js për listën e udhëtimeve, detajet dhe një kërkesë të
 simuluar. Të gjitha të dhënat janë fiktive; aplikacioni nuk bën rezervime reale.
 
+### Projekti live
+
+Mund ta kontrollosh aplikacionin këtu: [rideshare-mobile-ten.vercel.app](https://rideshare-mobile-ten.vercel.app/).
+
 ### Nisja e aplikacionit
 
 Instalo Node.js dhe npm, pastaj nga dosja `aplikacioni/` ekzekuto:
