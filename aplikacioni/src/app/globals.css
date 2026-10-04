@@ -1,0 +1,59 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0b1220;
+  color: #edf2fc;
+  font-family: system-ui, sans-serif;
+}
+
+a {
+  color: #89ddff;
+}
+
+main {
+  width: min(100%, 720px);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.trip-list {
+  display: grid;
+  gap: 16px;
+}
+
+.trip-card {
+  overflow-wrap: anywhere;
+  border: 1px solid #8090aa;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.action {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 14px;
+  background: #3548d4;
+  color: #fff;
+  font: inherit;
+  text-decoration: none;
+}
+
+.action:disabled {
+  background: #39455b;
+  color: #e4eaf4;
+  cursor: not-allowed;
+}
+
+.action:focus-visible,
+a:focus-visible {
+  outline: 3px solid #ffd166;
+  outline-offset: 3px;
+}
