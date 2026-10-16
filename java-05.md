@@ -21,39 +21,35 @@ e llogarisë, për të mos paraqitur të dhëna të vjetruara.
 
 ### Verifikimi teknik dhe PWA
 
-`npm run typecheck` dhe `npm run build` kaluan. Në shfletuesin lokal provoi
-faqen offline në gjerësi 390 px: nuk pati lëvizje horizontale, manifesti u
-ngarkua dhe service worker u regjistrua. Kur çaktivizova lidhjen dhe hapa
-panelin, shfletuesi shfaqi faqen offline. Këto prova nuk zëvendësojnë testet
-reale të OAuth-it dhe databazës më poshtë.
+`npm run typecheck` dhe `npm run build` kaluan. Në shfletues, manifesti u
+ngarkua dhe service worker u regjistrua/aktivizua. Lista u shfaq me katër
+udhëtime në gjerësi telefoni 375 px, pa lëvizje horizontale. Kur u çaktivizua
+lidhja, shfletuesi shfaqi faqen offline dhe jo oraret e ruajtura.
 
 ### Prova 1: Hyrja, rifreskimi dhe dalja
 
-Rrjedha e hyrjes/daljes dhe paneli janë implementuar, por prova reale me
-GitHub nuk u krye në këtë mjedis: mungojnë OAuth App Client ID/Secret dhe
-`NEXTAUTH_SECRET`. Përfundimi duhet verifikuar lokalisht pasi të krijohet
-OAuth App dhe të plotësohet `aplikacioni/.env.local`: pa hyrje paneli ofron
-butonin “Hyr me GitHub”; pas hyrjes dhe rifreskimit duhet të shfaqë emrin,
-ID-në dhe rolin; pas daljes duhet të ofrojë përsëri hyrjen. Nuk po e shënoj
-provën si të kaluar pa këto kredenciale dhe verifikim në shfletues.
+Pa hyrje, `/panel` shfaqi butonin “Hyr me GitHub”. Hyrja u krye përmes GitHub;
+paneli shfaqi emrin dhe rolin `udhetar`. Pas rifreskimit sesioni vazhdoi.
+Pas caktimit të rolit në Neon, rifreskimi shfaqi `shofer`. Klikimi “Dil nga
+llogaria” e ktheu panelin te gjendja pa hyrje me butonin e hyrjes. Hyrja e
+dytë u krye me sukses dhe paneli shfaqi sërish rolin `shofer`.
 
 ### Prova 2: Shoferi ndryshon udhëtimin e vet
 
-Kontrolli në server dhe formulari për udhëtimin ID 2 janë implementuar.
-Ndryshimi real në Neon nuk u provua sepse mungojnë `DATABASE_URL` dhe
-konfigurimi OAuth. Pas ekzekutimit të `schema-java05.sql`, hyrjes me GitHub,
-caktimit të rolit `shofer` dhe pronësisë së ID 2, provo orën `08:25`.
-Verifikoje në panel, listë, detaje dhe Neon, pastaj riktheje në `08:15`.
-Mos e shëno si të kaluar pa e kryer këtë provë.
+Pas ekzekutimit të SQL-së, profili im u caktua `shofer` dhe udhëtimi ID 2
+iu caktua profilit tim. E ndryshova orën nga `08:15` në `08:25`; paneli
+shfaqi mesazhin e suksesit, faqja e detajeve dhe lista treguan `08:25`, dhe
+Neon e konfirmoi ndryshimin. Pastaj e riktheva orën në `08:15` dhe e
+verifikova përsëri në Neon.
 
 ### Prova 3: Veprimi pa leje refuzohet
 
-Përditësimi SQL kërkon njëkohësisht që përdoruesi i sesionit të jetë shofer
-dhe pronar i udhëtimit. Testi real me formularin dhe Neon nuk u krye në këtë
-mjedis. Për verifikim, pasi të kalojë Prova 2, ndrysho përkohësisht vlerën
-`id` të formularit nga `2` në `1` dhe provo ruajtjen. Paneli duhet të tregojë
-“Nuk ke leje për këtë udhëtim. Ora nuk ndryshoi.”; në Neon ID 1 duhet të
-mbetet `08:00`. Rikthe formularin dhe ID 2 në gjendjen fillestare.
+Ndryshova përkohësisht ID-në e fshehur në formular nga `2` në `1` dhe
+provova ta ruaja. Paneli refuzoi veprimin me “Nuk ke leje për këtë udhëtim.
+Ora nuk ndryshoi.” Neon konfirmoi se ID 1 nuk ndryshoi dhe mbeti `10:00`;
+ID 2 mbeti `08:15`. **Shënim:** të dhënat ekzistuese të Neon-it kishin
+`10:00` për ID 1, jo `08:00` si shembulli i ushtrimit; raportova vlerën që
+u lexua realisht para dhe pas provës.
 
 ## Ku gjendet puna
 
@@ -69,20 +65,19 @@ mbetet `08:00`. Rikthe formularin dhe ID 2 në gjendjen fillestare.
 - Aplikacioni: https://github.com/demhasa/rideshare-mobile
 - Demo: https://rideshare-mobile-ten.vercel.app/
 
-OAuth App duhet krijuar nga pronari i llogarisë GitHub; sekretet vendosen
-vetëm në `.env.local` dhe nuk publikohen. Konfigurimi lokal përdor callback
-`http://localhost:3000/api/auth/callback/github`. Provat e mësipërme që
-kërkojnë kredenciale/databazë duhen kryer lokalisht para dorëzimit final.
+OAuth-i lokal përdor callback `http://localhost:3000/api/auth/callback/github`.
+Vlerat private ruhen vetëm në `aplikacioni/.env.local` dhe nuk publikohen.
 
 ## Çfarë mbetet për përmirësim
 
 Kërkesa për vend vazhdon të jetë simulim dhe nuk ruhet. Hapi pasues mund të
-jetë ruajtja e kërkesës dhe miratimi/refuzimi i saj nga shoferi. Duhet
-gjithashtu të kryhen tri provat manuale me OAuth App dhe Neon.
+jetë ruajtja e kërkesës dhe miratimi/refuzimi i saj nga shoferi. Për aktivizim
+në Vercel, duhen krijuar OAuth App dhe secrets të veçanta për domenin live,
+pasi callback-u lokal nuk përdoret në prodhim. Dorëzimi i detyrës bëhet në
+formularin GitHub të kursit pasi ndryshimet të jenë publike.
 
 ## Ndihma nga AI (Artificial Intelligence – inteligjencë artificiale)
 
 AI ndihmoi në implementimin e hyrjes, kontrollit të lejeve, ndërfaqes mobile,
-PWA-së dhe këtij raporti. Lidhja reale me GitHub dhe Neon nuk mund të
-verifikohej në këtë mjedis pa kredencialet personale; këto hapa janë shënuar
-qartë si të pakryer.
+PWA-së dhe këtij raporti. Hyrjen, daljen, ndryshimin e lejuar dhe refuzimin
+e provova vetë në shfletues me databazën Neon.
