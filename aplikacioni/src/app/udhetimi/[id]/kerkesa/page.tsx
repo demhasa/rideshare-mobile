@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Navigimi } from "@/components/Navigimi";
 import { gjejUdhetimin } from "@/lib/udhetimet";
 
 export const dynamic = "force-dynamic";
@@ -16,10 +17,16 @@ export default async function Kerkesa({
   } catch (error) {
     console.error(`Nuk u lexua udhëtimi ${id} nga Neon.`, error);
     return (
-      <main>
-        <h1>RideShare</h1>
-        <p role="alert">Nuk u lidhëm me databazën. Provo përsëri.</p>
-        <Link href="/">← Kthehu te lista</Link>
+      <main className="app-shell">
+        <Navigimi />
+        <section className="message-card">
+          <p className="eyebrow">KËRKESA PËR VEND</p>
+          <h1>Nuk u lidhëm me databazën.</h1>
+          <p role="alert">Kontrollo Neon dhe provo përsëri.</p>
+          <Link className="button button-primary" href="/">
+            Kthehu te lista
+          </Link>
+        </section>
       </main>
     );
   }
@@ -27,16 +34,35 @@ export default async function Kerkesa({
   if (!udhetim) notFound();
 
   return (
-    <main>
-      <Link href={`/udhetimi/${id}`}>← Kthehu te detajet</Link>
+    <main className="app-shell">
+      <Navigimi />
+      <Link className="back-link" href={`/udhetimi/${id}`}>
+        ← Kthehu te detajet
+      </Link>
       {udhetim.vende > 0 ? (
-        <>
-          <h1>Simulim: Në pritje</h1>
-          <p>Kërkesa për {udhetim.nisja} nuk është dërguar te shoferi.</p>
-          <p>Ruajtjen dhe konfirmimin real do t’i shtojmë më vonë.</p>
-        </>
+        <section className="message-card">
+          <span aria-hidden="true" className="message-icon">
+            ✓
+          </span>
+          <p className="eyebrow">SIMULIM · NË PRITJE</p>
+          <h1>Kërkesa u përgatit.</h1>
+          <p>
+            Kjo është vetëm provë për udhëtimin nga {udhetim.nisja}; kërkesa nuk
+            është dërguar te shoferi dhe nuk është ruajtur.
+          </p>
+          <Link className="button button-primary" href={`/udhetimi/${id}`}>
+            Kthehu te udhëtimi
+          </Link>
+        </section>
       ) : (
-        <h1>Nuk ka vende të lira.</h1>
+        <section className="message-card">
+          <p className="eyebrow">UDHËTIMI I PLOTË</p>
+          <h1>Nuk ka vende të lira.</h1>
+          <p>Ky udhëtim nuk pranon më kërkesa për vende.</p>
+          <Link className="button button-secondary" href={`/udhetimi/${id}`}>
+            Kthehu te detajet
+          </Link>
+        </section>
       )}
     </main>
   );

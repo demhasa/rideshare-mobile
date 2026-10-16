@@ -1,9 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { RegjistroPwa } from "@/components/RegjistroPwa";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RideShare · Udhëtimet për AAB",
-  description: "Udhëtime fiktive dhe kërkesë e simuluar për ushtrim.",
+  title: {
+    default: "RideShare · Udhëtime për AAB",
+    template: "%s · RideShare",
+  },
+  description: "Gjej udhëtime studentore drejt Kolegjit AAB.",
+  applicationName: "RideShare",
+  appleWebApp: { capable: true, title: "RideShare", statusBarStyle: "default" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#123c35",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -13,7 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sq">
-      <body>{children}</body>
+      <body>
+        <RegjistroPwa />
+        {children}
+      </body>
     </html>
   );
 }
