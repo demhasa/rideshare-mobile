@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { RegjistroPwa } from "@/components/RegjistroPwa";
+import Pwa from "@/components/Pwa";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="sq">
       <body>
-        <RegjistroPwa />
+        <Pwa />
         {children}
       </body>
     </html>
