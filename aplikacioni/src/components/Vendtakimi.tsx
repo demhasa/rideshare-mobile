@@ -21,6 +21,7 @@ export function Vendtakimi({ initialValue = "" }: VendtakimiProps) {
   const [locationState, setLocationState] = useState<LocationState>("idle");
   const [locationMessage, setLocationMessage] = useState("");
   const [accuracy, setAccuracy] = useState("");
+  const [coordinates, setCoordinates] = useState("");
 
   function konfirmoVendtakimin() {
     const vlera = teksti.trim();
@@ -35,13 +36,17 @@ export function Vendtakimi({ initialValue = "" }: VendtakimiProps) {
 
   function kurMerretPozicioni(position: GeolocationPosition) {
     const saktesia = Math.round(position.coords.accuracy);
+    const latitude = position.coords.latitude.toFixed(6);
+    const longitude = position.coords.longitude.toFixed(6);
     setLocationState("success");
     setLocationMessage("Pozicioni u mor.");
     setAccuracy(`${saktesia} m`);
+    setCoordinates(`${latitude}, ${longitude}`);
   }
 
   function kurDeshtonLeximi(error: GeolocationPositionError) {
     setAccuracy("");
+    setCoordinates("");
     if (error.code === 1) {
       setLocationState("denied");
       setLocationMessage("Leja u refuzua. Shkruaj vendtakimin vetë.");
@@ -57,6 +62,7 @@ export function Vendtakimi({ initialValue = "" }: VendtakimiProps) {
   function perdorVendndodhjen() {
     setMeetingError("");
     setAccuracy("");
+    setCoordinates("");
 
     if (!navigator.geolocation) {
       setLocationState("unavailable");
@@ -120,6 +126,9 @@ export function Vendtakimi({ initialValue = "" }: VendtakimiProps) {
       </p>
       <p className="location-accuracy">
         {accuracy ? `Saktësia: ${accuracy}` : ""}
+      </p>
+      <p className="location-coordinates">
+        {coordinates ? `Koordinatat: ${coordinates}` : ""}
       </p>
     </div>
   );

@@ -546,6 +546,15 @@ input:focus-visible {
   color: var(--muted);
 }
 
+.location-coordinates {
+  min-height: 19px;
+  margin: 0;
+  color: #31583d;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+}
+
 .panel-card {
   display: grid;
   gap: 20px;
