@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Vendtakimi } from "@/components/Vendtakimi";
 import { Navigimi } from "@/components/Navigimi";
 import { gjejUdhetimin } from "@/lib/udhetimet";
 
@@ -70,6 +71,7 @@ export default async function Detajet({
             <strong>{udhetim.destinacioni}</strong>
           </div>
         </div>
+        <Vendtakimi initialValue={udhetim.vendtakimi} />
         {udhetim.vende > 0 ? (
           <Link className="button button-primary button-block" href={`/udhetimi/${id}/kerkesa`}>
             Kërko një vend <span aria-hidden="true">→</span>

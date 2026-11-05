@@ -465,6 +465,87 @@ input:focus-visible {
   font-size: 14px;
 }
 
+.meeting-picker {
+  display: grid;
+  gap: 13px;
+  margin: 24px 0;
+  border-top: 1px solid var(--line);
+  padding-top: 23px;
+}
+
+.meeting-picker-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.meeting-picker-heading label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.meeting-picker-heading .button {
+  flex-shrink: 0;
+  min-height: 40px;
+  font-size: 12px;
+}
+
+.meeting-manual {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 9px;
+}
+
+.meeting-manual input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid #ced9d1;
+  border-radius: 12px;
+  padding: 0 13px;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.meeting-error,
+.confirmed-meeting,
+.location-status,
+.location-accuracy {
+  min-height: 19px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.meeting-error {
+  color: #813f32;
+}
+
+.confirmed-meeting {
+  color: #31583d;
+  font-weight: 700;
+}
+
+.location-status {
+  color: var(--muted);
+}
+
+.location-status-success {
+  color: #31583d;
+  font-weight: 700;
+}
+
+.location-status-denied,
+.location-status-timeout,
+.location-status-unavailable {
+  color: #813f32;
+}
+
+.location-accuracy {
+  color: var(--muted);
+}
+
 .panel-card {
   display: grid;
   gap: 20px;
@@ -612,6 +693,16 @@ input:focus-visible {
 
   .trip-card {
     padding: 19px;
+  }
+
+  .meeting-picker-heading {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .meeting-manual {
+    grid-template-columns: 1fr;
   }
 
   .section-heading {
