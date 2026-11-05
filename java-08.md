@@ -10,6 +10,7 @@ mund të:
 - përdorë vendndodhjen e telefonit vetëm pasi klikon butonin;
 - shohë saktësinë e pozicionit në metra;
 - shohë koordinatat `latitude, longitude` të kthyera nga pajisja;
+- hapë koordinatat në Google Maps në një skedë të re;
 - vazhdojë me zgjedhje manuale kur leja refuzohet, vendndodhja nuk është e
   disponueshme ose kërkesa përfundon me timeout.
 
@@ -35,7 +36,8 @@ U provua që:
 2. vendtakimi fillestar shfaqet në fushën manuale;
 3. një tekst i ri ruhet vetëm pas konfirmimit;
 4. tekst bosh ose vetëm me hapësira shfaq mesazh gabimi;
-5. suksesi i geolocation shfaq saktësinë në metra dhe koordinatat;
+5. suksesi i geolocation shfaq saktësinë në metra dhe koordinatat, si dhe
+   linkun për Google Maps;
 6. refuzimi i lejes e lë aktive zgjedhjen manuale;
 7. timeout-i dhe mungesa e mbështetjes shfaqin mesazh dhe lejojnë provë të
    re.

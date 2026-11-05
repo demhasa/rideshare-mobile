@@ -22,6 +22,7 @@ export function Vendtakimi({ initialValue = "" }: VendtakimiProps) {
   const [locationMessage, setLocationMessage] = useState("");
   const [accuracy, setAccuracy] = useState("");
   const [coordinates, setCoordinates] = useState("");
+  const [mapsUrl, setMapsUrl] = useState("");
 
   function konfirmoVendtakimin() {
     const vlera = teksti.trim();
@@ -42,11 +43,15 @@ export function Vendtakimi({ initialValue = "" }: VendtakimiProps) {
     setLocationMessage("Pozicioni u mor.");
     setAccuracy(`${saktesia} m`);
     setCoordinates(`${latitude}, ${longitude}`);
+    setMapsUrl(
+      `https://www.google.com/maps/search/?api=1&query=${latitude}%2C${longitude}`,
+    );
   }
 
   function kurDeshtonLeximi(error: GeolocationPositionError) {
     setAccuracy("");
     setCoordinates("");
+    setMapsUrl("");
     if (error.code === 1) {
       setLocationState("denied");
       setLocationMessage("Leja u refuzua. Shkruaj vendtakimin vetë.");
@@ -63,6 +68,7 @@ export function Vendtakimi({ initialValue = "" }: VendtakimiProps) {
     setMeetingError("");
     setAccuracy("");
     setCoordinates("");
+    setMapsUrl("");
 
     if (!navigator.geolocation) {
       setLocationState("unavailable");
@@ -130,6 +136,16 @@ export function Vendtakimi({ initialValue = "" }: VendtakimiProps) {
       <p className="location-coordinates">
         {coordinates ? `Koordinatat: ${coordinates}` : ""}
       </p>
+      {mapsUrl ? (
+        <a
+          className="maps-link"
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Hape në Google Maps <span aria-hidden="true">↗</span>
+        </a>
+      ) : null}
     </div>
   );
 }
