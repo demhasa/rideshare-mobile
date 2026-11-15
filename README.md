@@ -27,7 +27,7 @@ Mbaj `DATABASE_URL` nga Neon. Mos i vendos vlerat reale në GitHub, raport ose
 mesazhe; `.env.local` përjashtohet nga Git.
 
 Ekzekuto në Neon SQL Editor fillimisht `schema.sql`, pastaj
-`schema-java05.sql`. Nis aplikacionin:
+`schema-java05.sql` dhe `schema-java09.sql`. Nis aplikacionin:
 
 ```bash
 npm install
@@ -60,5 +60,6 @@ Vendos `GITHUB_ID`, `GITHUB_SECRET`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL` dhe
 veçantë e të rastësishëm për prodhim. Callback-u i OAuth App lokal nuk
 funksionon për domenin e publikuar. Mos i ruaj këto vlera në repository.
 
-Raportet janë te [java-03.md](./java-03.md), [java-04.md](./java-04.md) dhe
-[java-05.md](./java-05.md), pranë README dhe jashtë dosjes `aplikacioni/`.
+Raportet janë te [java-03.md](./java-03.md), [java-04.md](./java-04.md),
+[java-05.md](./java-05.md), [java-08.md](./java-08.md) dhe
+[java-09.md](./java-09.md), pranë README dhe jashtë dosjes `aplikacioni/`.

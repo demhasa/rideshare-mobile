@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Vendtakimi } from "@/components/Vendtakimi";
+import { Preferimi } from "@/components/Preferimi";
 import { Navigimi } from "@/components/Navigimi";
 import { gjejUdhetimin } from "@/lib/udhetimet";
+import { gjendjaPreferimit } from "@/lib/preferimet";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +35,13 @@ export default async function Detajet({
   }
 
   if (!udhetim) notFound();
+
+  let preferimi = { ruajtur: false, numer: 0 };
+  try {
+    preferimi = await gjendjaPreferimit(id);
+  } catch (error) {
+    console.error(`Nuk u lexua preferimi për udhëtimin ${id}.`, error);
+  }
 
   return (
     <main className="app-shell">
@@ -72,6 +81,11 @@ export default async function Detajet({
           </div>
         </div>
         <Vendtakimi initialValue={udhetim.vendtakimi} />
+        <Preferimi
+          fillimishtNumer={preferimi.numer}
+          fillimishtRuajtur={preferimi.ruajtur}
+          udhetimId={id}
+        />
         {udhetim.vende > 0 ? (
           <Link className="button button-primary button-block" href={`/udhetimi/${id}/kerkesa`}>
             Kërko një vend <span aria-hidden="true">→</span>

@@ -258,6 +258,48 @@ input:focus-visible {
   padding: 22px;
 }
 
+.favorite-box {
+  display: grid;
+  gap: 7px;
+  margin: 20px 0;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.favorite-button {
+  width: fit-content;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--green);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.favorite-button:disabled {
+  cursor: default;
+}
+
+.favorite-button span {
+  color: #b48600;
+  font-size: 22px;
+  vertical-align: -2px;
+}
+
+.favorite-count {
+  font-size: 14px;
+}
+
+.favorite-status,
+.favorite-box small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.favorite-status[role="alert"] {
+  color: #a53d2f;
+}
+
 .trip-card-top {
   display: flex;
   align-items: center;
