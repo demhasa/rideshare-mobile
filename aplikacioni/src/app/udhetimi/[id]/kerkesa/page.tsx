@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Navigimi } from "@/components/Navigimi";
 import { gjejUdhetimin } from "@/lib/udhetimet";
+import { GjendjaKerkeses } from "@/components/GjendjaKerkeses";
 
 export const dynamic = "force-dynamic";
 
@@ -39,31 +40,11 @@ export default async function Kerkesa({
       <Link className="back-link" href={`/udhetimi/${id}`}>
         ← Kthehu te detajet
       </Link>
-      {udhetim.vende > 0 ? (
-        <section className="message-card">
-          <span aria-hidden="true" className="message-icon">
-            ✓
-          </span>
-          <p className="eyebrow">SIMULIM · NË PRITJE</p>
-          <h1>Kërkesa u përgatit.</h1>
-          <p>
-            Kjo është vetëm provë për udhëtimin nga {udhetim.nisja}; kërkesa nuk
-            është dërguar te shoferi dhe nuk është ruajtur.
-          </p>
-          <Link className="button button-primary" href={`/udhetimi/${id}`}>
-            Kthehu te udhëtimi
-          </Link>
-        </section>
-      ) : (
-        <section className="message-card">
-          <p className="eyebrow">UDHËTIMI I PLOTË</p>
-          <h1>Nuk ka vende të lira.</h1>
-          <p>Ky udhëtim nuk pranon më kërkesa për vende.</p>
-          <Link className="button button-secondary" href={`/udhetimi/${id}`}>
-            Kthehu te detajet
-          </Link>
-        </section>
-      )}
+      <section className="detail-card">
+        <p className="eyebrow eyebrow-dark">KËRKESA PËR VEND</p>
+        <h1>{udhetim.nisja} – {udhetim.destinacioni}</h1>
+        <GjendjaKerkeses tripId={id} initialSeats={udhetim.vende} />
+      </section>
     </main>
   );
 }

@@ -61,5 +61,7 @@ veçantë e të rastësishëm për prodhim. Callback-u i OAuth App lokal nuk
 funksionon për domenin e publikuar. Mos i ruaj këto vlera në repository.
 
 Raportet janë te [java-03.md](./java-03.md), [java-04.md](./java-04.md),
-[java-05.md](./java-05.md), [java-08.md](./java-08.md) dhe
-[java-09.md](./java-09.md), pranë README dhe jashtë dosjes `aplikacioni/`.
+[java-05.md](./java-05.md), [java-08.md](./java-08.md),
+[java-09.md](./java-09.md) dhe [java-10.md](./java-10.md), pranë README dhe
+jashtë dosjes `aplikacioni/`. Për Java 10 ekzekuto gjithashtu
+`aplikacioni/schema-java10.sql` në Neon.

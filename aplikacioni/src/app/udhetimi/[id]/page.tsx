@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Vendtakimi } from "@/components/Vendtakimi";
 import { Preferimi } from "@/components/Preferimi";
+import { GjendjaKerkeses } from "@/components/GjendjaKerkeses";
 import { Navigimi } from "@/components/Navigimi";
 import { gjejUdhetimin } from "@/lib/udhetimet";
 import { gjendjaPreferimit } from "@/lib/preferimet";
@@ -86,18 +87,7 @@ export default async function Detajet({
           fillimishtRuajtur={preferimi.ruajtur}
           udhetimId={id}
         />
-        {udhetim.vende > 0 ? (
-          <Link className="button button-primary button-block" href={`/udhetimi/${id}/kerkesa`}>
-            Kërko një vend <span aria-hidden="true">→</span>
-          </Link>
-        ) : (
-          <button className="button button-block" disabled>
-            Nuk ka vende të lira
-          </button>
-        )}
-        <p className="section-note">
-          Kërkesa në këtë version është vetëm simulim dhe nuk i dërgohet shoferit.
-        </p>
+        <GjendjaKerkeses tripId={id} initialSeats={udhetim.vende} />
       </section>
     </main>
   );
