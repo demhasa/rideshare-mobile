@@ -27,7 +27,7 @@ Mbaj `DATABASE_URL` nga Neon. Mos i vendos vlerat reale në GitHub, raport ose
 mesazhe; `.env.local` përjashtohet nga Git.
 
 Ekzekuto në Neon SQL Editor fillimisht `schema.sql`, pastaj
-`schema-java05.sql` dhe `schema-java09.sql`. Nis aplikacionin:
+`schema-java05.sql`, `schema-java09.sql` dhe `schema-java10.sql`. Nis aplikacionin:
 
 ```bash
 npm install
@@ -41,6 +41,16 @@ shfaqur. Në Neon SQL Editor cakto rolin dhe pronësinë vetëm për profilin t�
 UPDATE profilet SET roli = 'shofer' WHERE github_id = 'ID_JOTE_GITHUB';
 UPDATE udhetimet SET shofer_id = 'ID_JOTE_GITHUB' WHERE id = '2';
 ```
+
+### Java 10 · Kërkesat në kohë reale
+
+Udhëtari kërkon një vend te faqja e detajeve; kërkesa ruhet në tabelën
+`kerkesat` në Neon. Shoferi pronar e sheh dhe e pranon pa Refresh, sepse të dy
+ekranet rilexojnë `GET /api/udhetimet/[id]/gjendja` çdo 5 sekonda. Pranimi
+(`POST /api/kerkesat/[id]/prano`) ndryshon statusin dhe ul vendet në një
+deklaratë SQL: i njëjti pranim nuk numërohet dy herë dhe vendet nuk bëhen
+negative. Udhëtimet fiktive `5` dhe `6` kanë nga 2 vende për provat; cakto
+veten si pronar me komandat e komentuara te `schema-java10.sql`.
 
 PWA (Progressive Web App – aplikacion web progresiv) ka manifest, ikonë dhe
 service worker. Kur humbet lidhja, shfaqet faqja offline; faqet dinamike me
@@ -61,5 +71,6 @@ veçantë e të rastësishëm për prodhim. Callback-u i OAuth App lokal nuk
 funksionon për domenin e publikuar. Mos i ruaj këto vlera në repository.
 
 Raportet janë te [java-03.md](./java-03.md), [java-04.md](./java-04.md),
-[java-05.md](./java-05.md), [java-08.md](./java-08.md) dhe
-[java-09.md](./java-09.md), pranë README dhe jashtë dosjes `aplikacioni/`.
+[java-05.md](./java-05.md), [java-08.md](./java-08.md),
+[java-09.md](./java-09.md) dhe [java-10.md](./java-10.md), pranë README dhe
+jashtë dosjes `aplikacioni/`.

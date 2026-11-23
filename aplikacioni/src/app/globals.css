@@ -507,6 +507,70 @@ input:focus-visible {
   font-size: 14px;
 }
 
+/* Java 10: gjendja e përbashkët e kërkesës mes shoferit dhe udhëtarit. */
+.sync-box {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 0;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.sync-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.detail-fact .sync-seats {
+  font-size: 24px;
+  letter-spacing: -0.03em;
+}
+
+.sync-requests {
+  display: grid;
+  gap: 10px;
+}
+
+.sync-request {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 15px;
+}
+
+.sync-request .eyebrow {
+  margin: 0 0 6px;
+}
+
+.sync-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: #edf0ed;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.sync-badge-ne_pritje {
+  background: #fff4d6;
+  color: #7a5a00;
+}
+
+.sync-badge-pranuar {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.sync-offline strong {
+  color: #813f32;
+}
+
 .meeting-picker {
   display: grid;
   gap: 13px;

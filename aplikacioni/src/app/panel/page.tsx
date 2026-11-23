@@ -126,8 +126,8 @@ export default async function Panel({
           ← Kthehu te udhëtimet
         </Link>
         <p className="helper-copy">
-          Kërkesa për vend mbetet simulim; ky panel demonstron vetëm hyrjen dhe
-          ndryshimin e autorizuar të orarit.
+          Kërkesat për vend dërgohen dhe pranohen te faqja e detajeve të
+          udhëtimit; ky panel demonstron hyrjen dhe ndryshimin e orarit.
         </p>
       </section>
     </main>

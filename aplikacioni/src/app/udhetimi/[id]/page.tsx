@@ -2,9 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Vendtakimi } from "@/components/Vendtakimi";
 import { Preferimi } from "@/components/Preferimi";
+import { GjendjaUdhetimit } from "@/components/GjendjaUdhetimit";
 import { Navigimi } from "@/components/Navigimi";
 import { gjejUdhetimin } from "@/lib/udhetimet";
 import { gjendjaPreferimit } from "@/lib/preferimet";
+import { lexoGjendjen } from "@/lib/kerkesat";
 
 export const dynamic = "force-dynamic";
 
@@ -43,6 +45,14 @@ export default async function Detajet({
     console.error(`Nuk u lexua preferimi për udhëtimin ${id}.`, error);
   }
 
+  // Leximi i parë bëhet në server; komponenti pastaj rilexon çdo 5 sekonda.
+  let gjendja = null;
+  try {
+    gjendja = await lexoGjendjen(id);
+  } catch (error) {
+    console.error(`Nuk u lexua gjendja e kërkesave për udhëtimin ${id}.`, error);
+  }
+
   return (
     <main className="app-shell">
       <Navigimi />
@@ -68,10 +78,6 @@ export default async function Detajet({
             <strong>{udhetim.ora}</strong>
           </div>
           <div className="detail-fact">
-            <span>Vende të lira</span>
-            <strong>{udhetim.vende}</strong>
-          </div>
-          <div className="detail-fact">
             <span>Vendtakimi</span>
             <strong>{udhetim.vendtakimi}</strong>
           </div>
@@ -86,18 +92,7 @@ export default async function Detajet({
           fillimishtRuajtur={preferimi.ruajtur}
           udhetimId={id}
         />
-        {udhetim.vende > 0 ? (
-          <Link className="button button-primary button-block" href={`/udhetimi/${id}/kerkesa`}>
-            Kërko një vend <span aria-hidden="true">→</span>
-          </Link>
-        ) : (
-          <button className="button button-block" disabled>
-            Nuk ka vende të lira
-          </button>
-        )}
-        <p className="section-note">
-          Kërkesa në këtë version është vetëm simulim dhe nuk i dërgohet shoferit.
-        </p>
+        <GjendjaUdhetimit fillimisht={gjendja} udhetimId={id} />
       </section>
     </main>
   );
