@@ -159,6 +159,9 @@ export async function dergoKerkesen(udhetimId: string): Promise<RezultatiDergimi
  *   nuk e ul numrin përsëri;
  * - vendet ulen vetëm kur vende > 0, prandaj nuk bëhen negative;
  * - FOR UPDATE bën që dy pranime të njëkohshme të radhiten.
+ * Java 11: në të njëjtën deklaratë krijohet njoftimi për udhëtarin. Nëse
+ * ndonjë pjesë dështon, nuk ruhet as pranimi as njoftimi; UNIQUE
+ * (kerkesa_id, lloji) + ON CONFLICT nuk lejon njoftim të dytë.
  */
 export async function pranoKerkesen(kerkesaId: string): Promise<RezultatiPranimit> {
   const profil = await profiliIm();
@@ -181,12 +184,21 @@ export async function pranoKerkesen(kerkesaId: string): Promise<RezultatiPranimi
       SET vende = vende - 1
       WHERE id = (SELECT udhetim_id FROM kerkesa) AND vende > 0
       RETURNING id
+    ),
+    pranuar AS (
+      UPDATE kerkesat
+      SET statusi = 'pranuar', pranuar_me = NOW()
+      WHERE id = (SELECT id FROM kerkesa)
+        AND EXISTS (SELECT 1 FROM vendi)
+      RETURNING id, udhetim_id, udhetar_id
+    ),
+    njoftimi AS (
+      INSERT INTO njoftimet (marres_id, kerkesa_id, lloji)
+      SELECT udhetar_id, id, 'pranuar' FROM pranuar
+      ON CONFLICT (kerkesa_id, lloji) DO NOTHING
+      RETURNING id
     )
-    UPDATE kerkesat
-    SET statusi = 'pranuar', pranuar_me = NOW()
-    WHERE id = (SELECT id FROM kerkesa)
-      AND EXISTS (SELECT 1 FROM vendi)
-    RETURNING udhetim_id
+    SELECT udhetim_id FROM pranuar
   `;
 
   if (ndryshuar.length === 1) {

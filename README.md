@@ -27,7 +27,7 @@ Mbaj `DATABASE_URL` nga Neon. Mos i vendos vlerat reale në GitHub, raport ose
 mesazhe; `.env.local` përjashtohet nga Git.
 
 Ekzekuto në Neon SQL Editor fillimisht `schema.sql`, pastaj
-`schema-java05.sql`, `schema-java09.sql` dhe `schema-java10.sql`. Nis aplikacionin:
+`schema-java05.sql`, `schema-java09.sql`, `schema-java10.sql` dhe `schema-java11.sql`. Nis aplikacionin:
 
 ```bash
 npm install
@@ -51,6 +51,16 @@ ekranet rilexojnë `GET /api/udhetimet/[id]/gjendja` çdo 5 sekonda. Pranimi
 deklaratë SQL: i njëjti pranim nuk numërohet dy herë dhe vendet nuk bëhen
 negative. Udhëtimet fiktive `5` dhe `6` kanë nga 2 vende për provat; cakto
 veten si pronar me komandat e komentuara te `schema-java10.sql`.
+
+### Java 11 · Njoftimet
+
+Kur shoferi pronar pranon një kërkesë, në të njëjtën deklaratë SQL krijohet
+një njoftim personal për udhëtarin (tabela `njoftimet`, `schema-java11.sql`).
+E njëjta përgjigje nuk krijon njoftim të dytë. Butoni **Njoftimet** tregon
+numrin e të palexuarave dhe rilexon `GET /api/njoftimet` çdo 5 sekonda; një
+njoftim i ri shfaq toast vetëm një herë. Hapja çon te `/kerkesat/[id]` dhe
+`POST /api/njoftimet/[id]/lexuar` e shënon si të lexuar vetëm për marrësin.
+Historia nuk fshihet. Web Push nuk është konfiguruar.
 
 PWA (Progressive Web App – aplikacion web progresiv) ka manifest, ikonë dhe
 service worker. Kur humbet lidhja, shfaqet faqja offline; faqet dinamike me

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Pwa from "@/components/Pwa";
+import { NjoftimetProvider } from "@/components/Njoftimet";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default function RootLayout({
     <html lang="sq">
       <body>
         <Pwa />
-        {children}
+        <NjoftimetProvider>{children}</NjoftimetProvider>
       </body>
     </html>
   );

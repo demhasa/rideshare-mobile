@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { KambanaNjoftimeve } from "./Njoftimet";
 
 export function Navigimi() {
   return (
@@ -12,9 +13,12 @@ export function Navigimi() {
           <small>Komuniteti AAB</small>
         </span>
       </Link>
-      <Link className="nav-link" href="/panel">
-        Paneli im <span aria-hidden="true">↗</span>
-      </Link>
+      <nav className="nav-actions">
+        <KambanaNjoftimeve />
+        <Link className="nav-link" href="/panel">
+          Paneli im <span aria-hidden="true">↗</span>
+        </Link>
+      </nav>
     </header>
   );
 }
