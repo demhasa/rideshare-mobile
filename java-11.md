@@ -39,56 +39,47 @@ Plotëso fushat e modelit me vëzhgimet e tua. Përdor vetëm të dhëna fiktive
   një udhëtar tjetër) dhe udhëtimin `7`.
 
 ### Prova 1: Rasti 1 · Përgjigjja bëhet njoftim
-- Hapat dhe përgjigjja e shoferit: në provën SQL me `ROLLBACK`: u krijua kërkesa
-  fiktive `3` (`ne_pritje`) për udhëtimin `7`; shoferi pronar e pranoi me të
-  njëjtën deklaratë që përdor `pranoKerkesen`. Pranimi ndryshoi 1 rresht dhe
-  vendet ranë 2 → 1. Prova në dy dritare të shfletuesit ende nuk është bërë.
-- Çfarë prisja te udhëtari: 1 njoftim i palexuar, i lidhur me kërkesën e
-  pranuar, dhe badge **1** te **Njoftimet** pa Refresh brenda 5 sekondave.
-- ID-ja e njoftimit, numri i palexuar dhe çfarë pashë realisht: në SQL u krijua
-  saktësisht 1 njoftim për kërkesën `3`, me `marres_id` = udhëtari i kërkesës
-  dhe `lexuar_me = NULL`. Pranimi i dytë i së njëjtës kërkesë ndryshoi 0
-  rreshta dhe nuk shtoi njoftim. Badge-in dhe toast-in në shfletues ende nuk i
-  kam vëzhguar.
-- Cila kërkesë u hap dhe çfarë mbeti pas Refresh: ende pa provuar në
-  shfletues; njoftimi ruhet në Neon, ndaj pritet të mbetet pas Refresh.
+- Hapat dhe përgjigjja e shoferit: udhëtari dërgoi kërkesë te udhëtimi fiktiv
+  (në pritje); shoferi pronar, në dritaren normale, klikoi **Prano kërkesën** dhe
+  pa **Pranimi u ruajt**; vendet ranë me 1.
+- Çfarë prisja te udhëtari: 1 njoftim i palexuar, i lidhur me atë kërkesë, pa
+  Refresh manual.
+- ID-ja e njoftimit, numri i palexuar dhe çfarë pashë realisht: te dritarja
+  private e udhëtarit, brenda 5 sekondave, butoni **Njoftimet** tregoi **1**
+  dhe u shfaq një toast **… e pranoi kërkesën tënde**. Në Neon kishte një
+  rekord të vetëm për atë kërkesë me `lexuar_me = NULL`. Prova SQL me
+  `ROLLBACK` konfirmoi se pranimi i dytë nuk shton rekord.
+- Cila kërkesë u hap dhe çfarë mbeti pas Refresh: pas Refresh njoftimi mbeti në
+  `/njoftimet` si i palexuar, pa toast të ri.
 
 ### Prova 2: Rasti 2 · Hapja dhe shënimi si i lexuar
-- ID-ja e njoftimit dhe cila kërkesë u hap realisht: në SQL, shënimi u provua
-  për njoftimin e kërkesës `3`. Hapja e faqes `/kerkesat/3?njoftim=…` në
-  shfletues ende nuk është provuar.
-- Numri i palexuar para/pas konfirmimit nga serveri: në SQL 1 → 0 pas
-  shënimit nga marrësi. Shënimi i dytë ktheu të njëjtën `lexuar_me` (koha e
-  parë nuk ndryshoi). Statusi mbeti `pranuar` dhe vendet mbetën 1: leximi nuk
-  prek kërkesën as vendet. Në UI numri ulet vetëm pasi `POST …/lexuar` kthen
-  sukses.
-- Çfarë mbeti në histori pas kthimit te lista dhe Refresh: njoftimi nuk
-  fshihet; vetëm `lexuar_me` plotësohet. Ende pa e vëzhguar në shfletues.
-- Nëse provova dështimin e shënimit: çfarë ndodhi dhe si e riprovova: në SQL,
-  shënimi nga një udhëtar tjetër ndryshoi 0 rreshta, dhe shënimi me ID-në e
-  një kërkese tjetër ndryshoi 0 rreshta (API kthen `404`). Në UI, kur shënimi
-  dështon shfaqet **Leximi nuk u ruajt. Njoftimi … mbetet i palexuar.** me
-  butonin **Provo përsëri**. Dështimin e rrjetit në shfletues nuk e provova.
+- ID-ja e njoftimit dhe cila kërkesë u hap realisht: klikimi i njoftimit hapi
+  `/kerkesat/<id>` të së njëjtës kërkesë, me statusin **U pranua** dhe vendet e
+  mbetura.
+- Numri i palexuar para/pas konfirmimit nga serveri: 1 para; pas mesazhit
+  **Njoftimi … u shënua si i lexuar** numri u bë 0.
+- Çfarë mbeti në histori pas kthimit te lista dhe Refresh: njoftimi mbeti në
+  listë si **E lexuar**; numri mbeti 0 edhe pas Refresh.
+- Nëse provova dështimin e shënimit: çfarë ndodhi dhe si e riprovova: Nuk e
+  provova këtë skenar shtesë në shfletues. Në SQL, shënimi nga një udhëtar
+  tjetër ose me kërkesë tjetër ndryshoi 0 rreshta.
 
 ### Prova 3: Rasti 3 · Rilidhja pa njoftime të dyfishta
-- ID-ja e kërkesës tjetër, dritarja offline dhe hapat: planifikuar me
-  udhëtimin `7`: udhëtari dërgon kërkesë, kalon vetëm dritaren e vet në
-  DevTools → Network → Offline, shoferi pranon, udhëtari kthehet në No
-  throttling. Ende nuk është bërë.
-- Çfarë prisja pas rilidhjes dhe pas dy leximeve të tjera: një toast i vetëm
-  pas leximit të parë të suksesshëm, numri 1, dhe asnjë toast tjetër në dy
-  leximet pasuese (ID-ja tashmë është te lista e ID-ve të njohura).
-- Numri i rekordeve, ID-ja e njoftimit dhe alarmet që pashë realisht: në SQL,
-  dy pranime të së njëjtës kërkesë dhanë 1 rekord. Toast-et pas rilidhjes ende
-  nuk i kam vëzhguar.
+- ID-ja e kërkesës tjetër, dritarja offline dhe hapat: kërkesë e re te udhëtimi
+  `7`; vetëm dritarja e udhëtarit në DevTools → Network → Offline; shoferi
+  pranoi; pastaj No throttling.
+- Çfarë prisja pas rilidhjes dhe pas dy leximeve të tjera: një toast i vetëm,
+  numri 1, pa toast në leximet pasuese.
+- Numri i rekordeve, ID-ja e njoftimit dhe alarmet që pashë realisht: pas
+  rilidhjes, pa Refresh, erdhi njoftimi i humbur me një toast; dy leximet e
+  tjera e mbajtën numrin 1 pa toast të dytë; në Neon një rekord i vetëm për
+  atë kërkesë.
 
 ## Prova me një hyrje tjetër
-- Ende pa u bërë me kolegun. Parashikimi im: nëse kolegu hap
-  `/kerkesat/<id>?njoftim=<id>` të një njoftimi që nuk është i tiji, faqja
-  thotë **Kërkesa nuk u gjet** dhe njoftimi nuk shënohet. Skedari që e
-  kontrollon: `aplikacioni/src/lib/njoftimet.ts` (`lexoKerkesen`,
-  `shenoSiTeLexuar`). Në SQL, profili fiktiv i tretë kishte 0 njoftime dhe
-  nuk mundi të shënonte njoftimin e tjetrit.
+- Parashikimi im: një llogari tjetër që hap `/kerkesat/<id>?njoftim=<id>` të
+  një njoftimi që nuk është i saj sheh **Kërkesa nuk u gjet** dhe njoftimi nuk
+  shënohet. Vëzhgimi: kështu ndodhi. Skedari që e kontrollon:
+  `aplikacioni/src/lib/njoftimet.ts` (`lexoKerkesen`, `shenoSiTeLexuar`).
 
 ## Ku gjendet kodi dhe çfarë mbetet
 - `aplikacioni/schema-java11.sql`: tabela `njoftimet` dhe udhëtimi fiktiv `7`.
@@ -117,8 +108,8 @@ Për bazën nuk kërkohet Web Push ose refuzim i kërkesës. Nëse i realizove, 
 - AI (Claude Code) shkroi skemën, funksionet e serverit, rrugët API, komponentët
   dhe këtë raport. U verifikua: `npm run typecheck` dhe `npm run build` kaluan;
   rregullat e pranimit, njoftimit dhe shënimit u provuan në Neon brenda një
-  transaksioni me `ROLLBACK`. Provat në dy dritare të shfletuesit dhe me
-  kolegun duhet t'i bëj vetë dhe t'i shënoj më sipër.
+  transaksioni me `ROLLBACK`. Tri rastet në dy dritare (normale dhe
+  private) i provova vetë.
 
 ## Pas dorëzimit të parë — përditëso më vonë
 Ky seksion mund të mbetet kështu në dorëzimin e parë. Pas përgjigjes, shto linkun e Issue-t, commit-in e kontrolluar dhe çfarë duhet korrigjuar. GREEN teknik nuk provon funksionimin. Java 11 është për feedback dhe progres, pa pikë shtesë laboratori.

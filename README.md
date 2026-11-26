@@ -60,7 +60,9 @@ E njëjta përgjigje nuk krijon njoftim të dytë. Butoni **Njoftimet** tregon
 numrin e të palexuarave dhe rilexon `GET /api/njoftimet` çdo 5 sekonda; një
 njoftim i ri shfaq toast vetëm një herë. Hapja çon te `/kerkesat/[id]` dhe
 `POST /api/njoftimet/[id]/lexuar` e shënon si të lexuar vetëm për marrësin.
-Historia nuk fshihet. Web Push nuk është konfiguruar.
+Historia nuk fshihet. Web Push nuk është konfiguruar. Udhëtimi fiktiv `7`
+është për Rastin 3; cakto veten pronar me komandën e komentuar te
+`schema-java11.sql`.
 
 PWA (Progressive Web App – aplikacion web progresiv) ka manifest, ikonë dhe
 service worker. Kur humbet lidhja, shfaqet faqja offline; faqet dinamike me
